@@ -1,7 +1,9 @@
 <template>
 	<div class="hello">
-		<input type="checkbox" :value="item.id" :name="item.title" v-for="item in todos" />{{item.id}}
-		<input type="checkbox" />
+		<div class="box" v-for="item in todos">
+			<input type="checkbox" :value="item.id" :name="item.title" @click="sel(item.id)" />
+			{{item.title}}
+		</div>
 	</div>
 </template>
 
@@ -9,12 +11,15 @@
 	import {
 		reactive,
 		ref,
-		onMounted
+		onMounted, computed, watch,props
 	} from 'vue'
 	export default {
 		name: 'HelloWorld',
 		props: ['getwrite'],
-		setup() {
+		setup(props) {
+			console.log(props.getwrite)
+			const arr = []
+			const txt = props
 			const todos = ref(
 				[{
 						id: 1,
@@ -29,8 +34,18 @@
 					}
 				]
 			)
+			const txts = watch(txt,(val)=> {
+				console.log(todos.value)
+				todos.value.push({
+					id:todos.value.length+1,
+					title:val.getwrite
+				})
+			})
+			const sel = function(f){
+				console.log(f)
+			}
 			return {
-				todos
+				todos,txt,txts,sel
 			}
 		}
 	}

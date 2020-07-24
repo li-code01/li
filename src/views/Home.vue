@@ -5,7 +5,7 @@
 		<input type="text" class="write" ref='write'/>
 		<button class="btn" @click="getwrite">提交</button>
 	</div>
-	<HelloWorld ></HelloWorld>
+	<HelloWorld :getwrite='txt'></HelloWorld>
   </div>
 </template>
 
@@ -20,15 +20,14 @@ export default {
   },
   setup(){
 	  const write = ref(null)
+	  const txt = ref('')
 	  const getwrite = function(){
 		  console.log(write.value.value)
+		  txt.value = write.value.value
+		  write.value.value = ''
 	  }
-   onMounted(()=>{
-     
-	 
-   })
 	  
-	  return {write,getwrite}
+	  return {write,getwrite,txt}
   },
 }
 </script>
